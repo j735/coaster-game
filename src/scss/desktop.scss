@@ -1,0 +1,95 @@
+@import 'variables.scss';
+
+@media screen and (min-width: 600px) {
+
+	#game-loader img {
+		width: 20%;
+		max-width: 200px;
+	}
+
+	#game-header {
+		padding: 25px;
+	}
+
+	#pause-btn, 
+	#close-btn {
+		font-size: 28px;
+	}
+
+	#game-overlay.score #close-btn {
+		margin: 25px 25px 0 0;
+	}
+
+	#game-overlay .questions {
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.overlay {
+    	width: $desktop-max-width;
+    	margin: 0 auto;
+	}
+
+	.instructions {
+	    margin: 35px auto;
+	    font-size: 32px;
+	}
+
+	#instruct-view p,
+	#game-logo-wrapper,
+	#end-view .message {
+    	max-width: 450px !important;
+    }
+
+	#game-logo-wrapper {
+	    width: 85%;
+    }
+
+    #game-content {
+		padding-top: 40px;
+	}
+
+	#intro-view {
+	    .bottom,
+	    .bottom-bg {
+	        padding-top: 25%;
+	    }
+	    .bottom {
+	        animation-duration: 85s;
+	    }
+	    .bottom-bg {
+	        animation-duration: 120s;
+	    }
+	}
+
+	#instruct-view p {
+	    width: 45%;
+	    font-size: 28px;
+    }
+
+    #game-view .inner {
+        position: relative !important; //needed to override style in custom.scss
+        left: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+    }
+
+	#game-overlay {
+		.time-up {
+			max-width: 450px;
+		}
+
+		.heading {
+			font-size: 50px;
+		}
+
+		.notice {
+			font-size: 26px;
+		}
+	}
+
+	#recipe-view .content {
+		max-width: 450px;
+		margin: 0 auto;
+	}
+}

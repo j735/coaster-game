@@ -1,0 +1,761 @@
+@import 'variables.scss';
+
+/*
+ *  MOBILE FIRST: all default styles defined here
+ */
+
+body {
+    font-family: 'Caveat Brush', cursive, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: -0.2px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    color: #3e362c;
+    background-color: $brand-yellow;
+}
+
+img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
+
+p {
+    margin-bottom: 25px;
+}
+
+button {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.container {
+    padding: 0 15px;
+}
+
+.header-intro {
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.header-intro .overlay {
+    top: 65%;
+}
+
+#wrapper {
+    overflow-x: hidden;
+    position: relative;
+    
+    // Noise overlay
+    &:after {
+        background: url(../img/style/noise-overlay.png);
+        position: absolute;
+        content: '';
+        height: 100%;
+        left: 0%;
+        top: 0%;
+        width: 100%;
+        pointer-events: none;
+        z-index: $noiseZIndex;
+    }
+}
+
+#game-header {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 25px;
+}
+
+.game-view #game-header {
+    display: block;
+}
+
+#start-btn {
+    display: block;
+    width: 120px;
+    height: 87px;
+    margin: 0 auto;
+    background-image: url(../img/style/play-btn.png);
+
+    &:hover {
+        background-image: url(../img/style/play-btn-alt.png);
+    }
+}
+
+#pause-btn,
+#close-btn,
+#back-btn {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-family: 'Caveat Brush', cursive, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    background-color: transparent;
+}
+
+#close-btn {
+    width: 20px;
+    position: fixed;
+    top: 25px;
+    right: 25px;
+}
+
+.next-btn {
+    margin: 0 auto;
+    display: block;
+}
+
+#back-btn {
+    display: none;
+    margin: 25px 0 0 25px;
+
+    img {
+        width: 50px;
+    }
+}
+
+#progress-bar {
+    position: relative;
+    z-index: $navZIndex;
+    width: 100%;
+    height: 5px;
+    background-color: $game-green;
+
+    &.done {
+        width: 0;
+    }
+    &.warning {
+        background-color: $game-red;
+    }
+}
+
+#logo-game {
+    width: 150px;
+    margin: 0 auto;
+}
+
+#game-loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $brand-yellow;
+    z-index: $navZIndex;
+
+    &.active {
+        display: block;
+    }
+
+    img {
+        width: 55%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.view {
+    position: absolute;
+    z-index: 800;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding-bottom: 35px;
+    background-color: $brand-yellow;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    overflow-y: scroll; /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;
+
+    &.hide {
+        z-index: 1000;
+        @include tear-animation();
+    }
+    &.full-height {
+        padding-top: 0;
+    }
+}
+
+#views {
+    position: relative;
+}
+
+#intro-view {
+    display: none;
+    z-index: 1500;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    padding: 0 20px;
+
+    &.active {
+        display: block;
+    }
+
+    .bottom,
+    .bottom-bg {
+        display: none; //display controlled in custom.scss
+        background-image: url(../img/style/bottles-home.png);
+        background-repeat: repeat-x;
+        background-position: right bottom 15px; //distance from bottom
+        background-size: contain;
+        position: fixed;
+        width: 300%;
+        right: 0;
+        bottom: 0;
+        box-sizing: border-box;
+        padding-top: 65%;
+        transform: translate3d(0, 0, 0);
+        pointer-events: none;
+    }
+    .bottom {
+        animation: move-bottles 45s linear infinite;
+    }
+    .bottom-bg {
+        opacity: 0.15;
+        margin-bottom: 20px;
+        animation: move-bottles 70s linear infinite;
+    }
+}
+
+#instruct-view {
+    display: none;
+    padding: 0 20px;
+
+    &.active {
+        display: block;
+    }
+    p {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 26px;
+        line-height: 1.2;
+    }
+
+    .next-btn {
+        width: $button-width;
+        height: 64px;
+        background-image: url(../img/style/take-a-shot-btn.png);
+        margin-top: 50px;
+
+        &:hover {
+            background-image: url(../img/style/take-a-shot-btn-alt.png);
+        }
+    }
+}
+
+#game-view {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+
+    .inner {
+        background-color: $brand-yellow;
+        width: 100%;
+    }
+}
+
+#recipe-view {
+    display: none;
+    position: relative;
+    top: 0;
+
+    &.active {
+        display: block;
+    }
+
+    #view-recipe-btn {
+        display: block;
+        width: $button-width;
+        height: 51px;
+        margin: 25px auto 0;
+        background-image: url(../img/style/see-recipe-btn.png);
+
+        &:hover {
+            background-image: url(../img/style/see-recipe-btn-alt.png);
+        }
+    }
+    .next-btn {
+        width: $button-width;
+        height: 55px;
+        background-image: url(../img/style/hit-me-again-btn.png);
+
+        &:hover {
+            background-image: url(../img/style/hit-me-again-btn-alt.png);
+        }
+        &.done {
+            background-image: url(../img/style/close-tab-btn.png);
+        }
+    }
+    .next-btn.done:hover {
+        background-image: url(../img/style/close-tab-btn-alt.png);
+    }
+
+    .frame-wrapper {
+        position: relative;
+    }
+    .buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#end-view {
+    // z-index: 700;
+    display: none;
+    padding-bottom: 0;
+
+    &.active {
+        display: block;
+    }
+
+    #see-score-btn {
+        width: $button-width;
+        height: 65px;
+        margin-bottom: 15px;
+        background-image: url(../img/style/see-score-btn.png);
+
+        &:hover {
+            background-image: url(../img/style/see-score-btn-alt.png);
+        }
+    }
+    #see-prizes-btn {
+        width: $button-width;
+        height: 65px;
+        margin-bottom: 15px;
+        background-image: url(../img/style/see-prizes-btn.png);
+
+        &:hover {
+            background-image: url(../img/style/see-prizes-btn-alt.png);
+        }
+    }
+    #play-again-btn {
+        width: $button-width;
+        height: 55px;
+        margin-bottom: 50px;
+        background-image: url(../img/style/play-again-btn.png);
+
+        &:hover {
+            background-image: url(../img/style/play-again-btn-alt.png);
+        }
+    }
+
+    .title {
+        font-size: 42px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+    }
+    .intro,
+    .message {
+        padding: 0 20px;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 24px;
+        line-height: 1.2;
+    }
+    .message {
+        margin-bottom: 25px;
+
+        p {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+#game-logo-wrapper {
+    margin: 0 auto;
+}
+
+#game-logo {
+    max-width: $desktop-max-width;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#letter-img {
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    transition: all 2s;
+    position: relative;
+}
+
+#letter-img-sm {
+    width: 55%;
+    margin: 0 auto;
+}
+
+#game-content {
+    position: relative;
+}
+
+#question-text {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+::-webkit-input-placeholder,
+:-moz-placeholder,
+::-moz-placeholder, 
+:-ms-input-placeholder {  
+   text-align: center;
+}
+
+#answer-box {
+    display: block;
+    margin: 0 auto;
+    width: 85%;
+    max-width: 340px;
+    text-align: center;
+    font-family: 'Caveat Brush', cursive, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    height: 45px;
+    margin: 0 auto 20px;
+    box-sizing: border-box;
+    appearance: none;
+    outline: none;
+    z-index: 99; //keep above overlay
+    position: relative;
+    border: 10px solid transparent;
+    border-image: url(../img/style/text-field-border.png) 10 10 stretch;
+
+    &.correct {
+        border: solid 1px green;
+        box-shadow: 0 0 5px rgba(34, 139, 34, 1);
+    }
+    &.wrong {
+        border: solid 1px red;
+        box-shadow: 0 0 5px rgba(255, 0, 0, 1);
+    }
+}
+
+#messaging {
+    padding: 0 15px;
+    text-align: center;
+    font-size: 24px;
+    min-height: 40px;
+    // margin-top: -10%;
+    margin-bottom: 10px;
+
+    &.correct {
+        color: $game-green;
+    }
+    &.wrong {
+        color: red;
+    }
+}
+
+.hrule {
+    // width: 95%;
+    padding: 0 15px;
+    max-width: 450px;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    &.middle {
+        margin-bottom: 15px;
+    }
+    &.bottom {
+        margin-top: 10px;
+    }
+}
+
+#game-overlay,
+#noise-overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#game-overlay {
+    display: none;
+    position: absolute;
+    z-index: 1800;
+    background-color: $brand-yellow;
+    overflow-y: scroll; /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;
+
+    &.active {
+        display: block;
+    }
+    &.hide {
+        @include tear-animation();
+    }
+    &.time {
+        .time-up {
+          display: block;
+        }
+    }
+    &.score {
+        background-color: $brand-yellow;
+
+        #close-btn,
+        .questions {
+            display: block;
+        }
+        .next-btn {
+            display: none;
+        }
+    }
+    &.recipe {
+        background-color: $brand-yellow;
+        // background-color: lighten($brand-yellow, 5%);
+
+        &.from-score {
+            #back-btn {
+              display: block;
+            }
+            #close-btn {
+              display: none;
+            }
+        }
+
+        #close-btn,
+        .recipe-text {
+          display: block;
+        }
+    }
+    &.prizes {
+        #close-btn,
+        .prize-content {
+            display: block;
+        }
+    }
+
+    #close-btn {
+        display: none;
+        z-index: $foregroundZIndex;
+    }
+
+    .heading {
+        font-size: 42px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+    .notice {
+        font-size: 21px;
+        line-height: 1.25;
+        margin-bottom: 50px;
+    }
+    .time-up,
+    .recipe-text {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .time-up {
+        width: 85%;
+        text-align: center;
+        color: black;
+    }
+    .recipe-text {
+        width: 100%;
+        max-width: 600px;
+    }
+    .questions {
+        display: none;
+        padding: 0 0 35px;
+        text-align: center;
+    }
+    .prize-content {
+        display: none;
+        max-width: 600px;
+        margin: 0 auto;
+        padding-top: 60px;
+
+        .title {
+            width: 65%;
+            max-width: 180px;
+            margin: 0 auto 25px;
+        }
+        .sub-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .prize {
+            margin: 0 auto 40px;
+            max-width: 250px;
+
+            img {
+                margin-bottom: 10px;
+            }
+            .caption {
+                margin: 0;
+                text-align: center;
+            }
+        }
+    }
+    .next-btn {
+        width: $button-width;
+        height: 53px;
+        background-image: url(../img/style/another-round-btn.png);
+
+        &:hover {
+            background-image: url(../img/style/another-round-btn-alt.png);
+        }
+        &.done {
+            background-image: url(../img/style/close-tab-btn.png);
+        }
+    }
+    .next-btn.done:hover {
+        background-image: url(../img/style/close-tab-btn-alt.png);
+    }
+}
+
+.copyright {
+    padding-bottom: 15px;
+    text-align: center;
+    font-size: 20px;
+
+    a {
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+        letter-spacing: 0.2px;
+    }
+}
+
+.instructions {
+    width: 90%;
+    color: black;
+    margin: 0 auto 25px;
+    font-size: 27px;
+    line-height: 1.25;
+    text-align: center;
+
+    span {
+        display: block;
+    }
+}
+
+.coaster {
+    width: 29%;
+    margin: 0 2% 15px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    display: inline-block;
+
+    &.correct {
+        cursor: pointer;
+
+        .status {
+            background-color: green;
+        }
+    }
+    &.wrong {
+        .status {
+            background-color: red;
+        }
+    }
+
+    .status {
+        display: block;
+        margin: 0 auto;
+        border: solid 2px black;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+    }
+}
+
+.elephant {
+    display: none;
+    position: absolute;
+    z-index: $noiseZIndex;
+    pointer-events: none;
+
+    &.active {
+        display: block;
+    }
+    &.left {
+        top: 50%;
+        left: 0;
+        // transform: translateX(-100%);
+        animation: bounce-left 12s infinite;
+    }
+    &.right {
+        top: 10%;
+        right: 0;
+        transform: scaleX(-1);
+        filter: FlipH;
+        animation: bounce-right 15s infinite;
+    }
+
+    .sprite {
+        width: 400px;
+        height: 303px;
+        background-image: url(../img/style/elephant-sprite.png);
+        animation: elephant-fly 1s steps(15) infinite;
+    }
+}
+
+.share-buttons {
+    text-align: center;
+    margin-bottom: 50px;
+
+    button {
+        width: 50px;
+    }
+}
+
+@keyframes mask-play {
+    from {
+        mask-position: 0% 0;
+    }
+    to {
+        mask-position: 100% 0;
+    }
+}
+
+@keyframes move-bottles {
+    100% { 
+        transform: translateX(66.6666667%);  
+    }
+}
+
+@keyframes elephant-fly {
+   from { background-position:    0px; }
+     to { background-position: -6000px; }
+}
+
+@keyframes bounce-left {
+    0% { transform: translate(-100%, 0); }
+    25% { transform: translate(-50%, -50%); }
+    50% { transform: translate(0, -25%); }
+    75% { transform: translate(50%, -50%); }
+    100% { transform: translate(80%, 0); left: 100%; }
+    // 0% { left: 0; }
+    // 25% { left: 25%; }
+    // 50% { left: 50%;  }
+    // 75% { left: 25%;  }
+    // 100% { left: 25%; }
+}
+
+@keyframes bounce-right {
+    0% { transform: translate(100%, 0) scaleX(-1); }
+    25% { transform: translate(50%, -50%) scaleX(-1); }
+    50% { transform: translate(0, -25%) scaleX(-1); }
+    75% { transform: translate(-50%, -50%) scaleX(-1); }
+    100% { transform: translate(-100%, 0) scaleX(-1); right: 100%; }
+}

@@ -1,0 +1,19 @@
+$brand-yellow: #f5f4e3;
+$game-red: #f50202;
+$game-green: #009700;
+
+$backgroundZIndex: 1;
+$midgroundZIndex: 100;
+$subForegroundZIndex: 900;
+$foregroundZIndex: 1000;
+$navZIndex: 1500;
+$noiseZIndex: 2000;
+
+$button-width: 200px;
+$desktop-max-width: 450px;
+
+@mixin tear-animation() {
+	mask: url(../img/style/transition-mask.png);
+	mask-size: 3000% 100%;
+	animation: mask-play 1.4s steps(29) forwards;
+}
